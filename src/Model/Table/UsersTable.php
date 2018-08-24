@@ -68,9 +68,16 @@ class UsersTable extends Table
 
         $validator
             ->scalar('postNumber')
-            ->maxLength('postNumber', 255)
+            ->maxLength('postNumber', 7)
             ->requirePresence('postNumber', 'create')
-            ->notEmpty('postNumber');
+            ->notEmpty('postNumber')
+            ->add('postNumber', 'custom', [
+                'rule' => function($value, $context){
+                    if (!preg_match("/^[0-9]{7}$/", $value)) {
+                        return false;
+                    }
+                    return true;
+                }, 'message' => '郵便番号を入力してください']);
 
         $validator
             ->scalar('prececture')
