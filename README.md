@@ -49,3 +49,50 @@ configuration relevant for your application.
 The app skeleton uses a subset of [Foundation](http://foundation.zurb.com/) (v5) CSS
 framework by default. You can, however, replace it with any other library or
 custom styles.
+
+
+## Table design
+
+### users table
+| Field         | Type         | Null | Key | Default | Extra          |
+|:-----------:|:------------:|:------------:|:------------:|:------------:|:------------:|
+|id|INT|NO|PRYMARY|-|AUTO_INCREMENT|
+|firstname|VARCHAR(255)|NO|-|-|-|
+|lastname|VARCHAR(255)|NO|-|-|-|
+|email|VARCHAR(255)|NO|-|-|UNIQUE|
+|postNumber|VARCHAR(255)|NO|-|-|-|
+|prefecture|VARCHAR(255)|NO|-|-|-|
+|address|VARCHAR(255)|NO|-|-|-|
+|password|VARCHAR(255)|NO|-|-|-|
+|level|INT|NO|-|0|-|
+
+level 0:(Normal User)   1:(Seller User) 2:(Admin User)
+
+### products table
+| Field         | Type         | Null | Key | Default | Extra          |
+|:-----------:|:------------:|:------------:|:------------:|:------------:|:------------:|
+|id|INT|NO|PRY|-|AUTO_INCREMENT|
+|title|VARCHAR(255)|NO|-|-|-|
+|img|VARCHAR(255)|NO|-|初期画像URL|-|
+|details|TEXT|YES|-|-|-|
+|price|DECIMAL(10,3)|NO|-|-|-|
+|stock|INT|NO|-|-|-|
+|saleDate|TIMESTAMP|NO|-|-|-|
+|user_id|INT|NO|FOREIGN|-|-|
+
+### Purchase table
+| Field         | Type         | Null | Key | Default | Extra          |
+|:-----------:|:------------:|:------------:|:------------:|:------------:|:------------:|
+|id|INT|NO|PRY|-|AUTO_INCREMENT|
+|purchaseDate|TIMESTAMP|NO|-|-|-|
+|level|INT|NO|-|0|-|
+
+level:0(Before purchase) level:1(After purchase)
+
+### Cart table
+| Field         | Type         | Null | Key | Default | Extra          |
+|:-----------:|:------------:|:------------:|:------------:|:------------:|:------------:|
+|user_id|INT|NOT|PRIMARY|-|-|
+|product_id|INT|NOT|PRIMARY|-|-|
+|Purchase_id|INT|NOT|PRIMARY|-|-|
+|count|INT|NOT|-|-|-|
