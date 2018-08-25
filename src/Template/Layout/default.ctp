@@ -42,8 +42,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </ul>
         <div class="top-bar-section">
             <ul class="right">
-                <li><a href="">hoge</a></li>
-                <li><a href="">hoge</a></li>
+                <?php if(isset($current_user)): ?>
+                   <li><?=$this->Html->link('ログアウト',['controller' => 'Users', 'action' => 'logout'])?></li>
+                <?php else: ?>
+                    <li><?=$this->Html->link('ログイン',['controller' => 'Users', 'action' => 'login'])?></li>
+                    <li><?=$this->Html->link('新規登録',['controller' => 'Users', 'action' => 'signup'])?></li>
+                <?php endif ?>
             </ul>
         </div>
     </nav>
