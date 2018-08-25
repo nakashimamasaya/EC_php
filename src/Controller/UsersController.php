@@ -2,15 +2,23 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
-/**
- * Users Controller
- *
- *
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
 class UsersController extends AppController
 {
+
+    public function beforeFilter(Event $event){
+        parent::beforeFilter($event);
+        $this->Auth->allow(['login','signup']);
+    }
+
+    public function index()
+    {
+        $users = $this->paginate($this->Users);
+
+        $this->set(compact('users'));
+    }
+
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
@@ -21,7 +29,26 @@ class UsersController extends AppController
     }
 
     public function login(){
+        $user = $this->Auth->user();
+        if(isset($user)){
+            $this->redirect(['controller'=>'Users','action'=>'index']);
+        }
+        else{
+            if ($this->request->is('post')){
+                $user = $this->Auth->identify();
+                if ($user) {
+                    $this->Auth->setUser($user);
+                    $this->Flash->success(__('ログインしました'));
+                    return $this->redirect($this->Auth->redirectUrl());
+                }
+                $this->Flash->error(__('ユーザ名もしくはパスワードが間違っています'));
+            }
+        }
+    }
 
+    public function logout(){
+        $this->Flash->success('ログアウトしました');
+        return $this->redirect($this->Auth->logout());
     }
 
     public function signup()
