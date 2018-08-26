@@ -67,7 +67,6 @@ class AppController extends Controller
     }
 
     public function beforeFilter(Event $event){
-        $this->Auth->allow();
         $this->set('current_user', $this->Auth->user());
     }
 }
