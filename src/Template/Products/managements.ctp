@@ -4,6 +4,7 @@
  * @var \App\Model\Entity\Product[]|\Cake\Collection\CollectionInterface $products
  */
 ?>
+<?= $this->element('managements_nav',['current_user' => $current_user]) ?>
 <div class="products index large-9 medium-8 columns content">
     <h3><?= __('Products') ?></h3>
     <table cellpadding="0" cellspacing="0">
@@ -15,10 +16,13 @@
                 <th scope="col"><?= $this->Paginator->sort('price') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('stock') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('saleDate') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($products as $product): ?>
+            <?php print_r($product->user) ?>
             <tr>
                 <td><?= $this->Number->format($product->id) ?></td>
                 <td><?= h($product->title) ?></td>
@@ -26,6 +30,12 @@
                 <td><?= $this->Number->format($product->price) ?></td>
                 <td><?= $this->Number->format($product->stock) ?></td>
                 <td><?= h($product->saleDate) ?></td>
+                <td><?= $this->Html->link($product->user_id, ['controller' => 'Users', 'action' => 'view', $product->user_id])?></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['action' => 'view', $product->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $product->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $product->id], ['confirm' => __('商品を削除しますか?', $product->id)]) ?>
+                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>

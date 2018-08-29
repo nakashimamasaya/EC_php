@@ -57,6 +57,15 @@ use Cake\Utility\Security;
 //         ->toServer();
 // }
 
+try {
+    josegonzalez\Dotenv\Loader::load([
+        'filepath' => __DIR__ . DS . '.env',
+        'toEnv' => true
+    ]);
+} catch (InvalidArgumentException $e) {
+    // do nothing in case the file doesn't exist
+}
+
 /*
  * Read configuration file and inject configuration into various
  * CakePHP classes.
