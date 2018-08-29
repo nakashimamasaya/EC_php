@@ -11,15 +11,11 @@ class ManagementsController extends AppController
         $this->Auth->allow(['login']);
     }
 
-    public function index()
-    {
-
-    }
-
     public function login(){
         $user = $this->Auth->user();
         if(isset($user)){
-            $this->redirect(['controller'=>'Managements','action'=>'index']);
+            $this->Flash->error('ログインしています');
+            $this->redirect(['controller'=>'Products','action'=>'managements']);
         }
         else{
             if ($this->request->is('post')){
