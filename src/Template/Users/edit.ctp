@@ -4,33 +4,48 @@
  * @var \Cake\Datasource\EntityInterface $user
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
+<?= $this->element('managements_nav',['current_user' => $current_user]) ?>
 <div class="users form large-9 medium-8 columns content">
     <?= $this->Form->create($user) ?>
     <fieldset>
         <legend><?= __('Edit User') ?></legend>
         <?php
-            echo $this->Form->control('firstname');
-            echo $this->Form->control('lastname');
-            echo $this->Form->control('email');
-            echo $this->Form->control('postNumber');
-            echo $this->Form->control('prececture');
-            echo $this->Form->control('address');
-            echo $this->Form->control('password');
-            echo $this->Form->control('level');
+            echo $this->Form->control('lastname', [
+                'label' => '氏名'
+            ]);
+            echo $this->Form->control('firstname', [
+                'label' => '名前'
+            ]);
+            echo $this->Form->control('email', [
+                'label' => 'メールアドレス'
+            ]);
+            echo $this->Form->control('postNumber', [
+                'label' => '郵便番号',
+                'onKeyUp' => "AjaxZip3.zip2addr(this,'','prececture','address');"
+            ]);
+            echo $this->Form->control('prececture', [
+                'label' => '都道府県'
+            ]);
+            echo $this->Form->control('address', [
+                'label' => '以降の住所'
+            ]);
+            echo $this->Form->control('password', [
+                'label' => 'パスワード',
+                'value' => ''
+            ]);
+            echo $this->Form->control('password_confirm',[
+                'type' => 'password',
+                'label' => 'パスワード（確認）'
+            ]);
+            if($current_user['level'] == 2){
+                echo '<p>ユーザーレベル</p>';
+                echo $this->Form->select('level',
+                    [0 => '一般ユーザ', 1 => '出品者ユーザ', 2 => 'adminユーザ'],
+                    []
+                );
+            }
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->button(__('送信')) ?>
     <?= $this->Form->end() ?>
 </div>
