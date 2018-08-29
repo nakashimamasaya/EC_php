@@ -35,7 +35,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body>
     <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
+        <ul class="title-area large-2 medium-4 columns">
             <li class="name">
                 <h1><a href="">仮ヘッダー</a></h1>
             </li>
@@ -56,6 +56,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <?= $this->fetch('content') ?>
     </div>
     <footer>
+        <ul class="left" style="list-style: none;">
+            <?php if(!isset($current_user)): ?>
+                <li><?=$this->Html->link('管理ページログイン',['controller' => 'Managements', 'action' => 'login'])?></li>
+            <?php endif ?>
+        </ul>
     </footer>
 </body>
 </html>
