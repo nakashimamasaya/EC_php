@@ -32,6 +32,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+    <?= $this->Html->script('http://code.jquery.com/jquery-1.11.3.min.js'); ?>
+    <?= $this->Html->css('https://use.fontawesome.com/releases/v5.0.6/css/all.css') ?>
 </head>
 <body>
     <nav class="top-bar expanded" data-topbar role="navigation">
