@@ -17,9 +17,30 @@ class ProductsController extends AppController
 
     public function index()
     {
-        $products = $this->paginate($this->Products);
 
+        $this->paginate = [
+            'limit' => 10,
+            'contain' => ['Users'],
+            'order' => [
+                'saleDate' => 'desc'
+            ]
+        ];
+        $products = $this->paginate($this->Products);
         $this->set(compact('products'));
+        $this->set('today', date("Y/m/d"));
+    }
+
+    public function index2(){
+        $this->paginate = [
+            'limit' => 12,
+            'contain' => ['Users'],
+            'order' => [
+                'saleDate' => 'desc'
+            ]
+        ];
+        $products = $this->paginate($this->Products);
+        $this->set(compact('products'));
+        $this->set('today', date("Y/m/d"));
     }
 
     public function managements(){
@@ -40,6 +61,14 @@ class ProductsController extends AppController
     {
         $product = $this->Products->get($id, [
             'contain' => []
+        ]);
+
+        $this->set('product', $product);
+    }
+
+    public function details($id = null){
+        $product = $this->Products->get($id, [
+            'contain' => ['Users']
         ]);
 
         $this->set('product', $product);
