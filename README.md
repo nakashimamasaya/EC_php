@@ -86,6 +86,7 @@ level 0:(Normal User)   1:(Seller User) 2:(Admin User)
 |id|INT|NO|PRY|-|AUTO_INCREMENT|
 |purchaseDate|TIMESTAMP|NO|-|-|-|
 |level|INT|NO|-|0|-|
+|user_id|INT|NOT|FOREIGN|-|-|
 
 level:0(Before purchase) level:1(After purchase)
 
