@@ -24,6 +24,7 @@ class Purchase extends Entity
      */
     protected $_accessible = [
         'purchaseDate' => true,
-        'level' => true
+        'level' => true,
+        'user_id' => true
     ];
 }
