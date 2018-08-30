@@ -34,6 +34,13 @@ class PurchasesTable extends Table
         $this->setTable('purchases');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
+        ]);
+        // $this->hasMany('Carts')
+             // ->setForeignKey('purchase_id');
     }
 
     /**
@@ -58,5 +65,12 @@ class PurchasesTable extends Table
             ->notEmpty('level');
 
         return $validator;
+    }
+
+     public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['user_id'], 'Users'));
+
+        return $rules;
     }
 }

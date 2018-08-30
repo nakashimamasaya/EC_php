@@ -37,6 +37,10 @@ class UsersTable extends Table
 
         $this->hasMany('Products')
              ->setForeignKey('user_id');
+        $this->hasMany('Purchases')
+             ->setForeignKey('user_id');
+        $this->hasMany('Carts')
+             ->setForeignKey('user_id');
     }
 
     /**
