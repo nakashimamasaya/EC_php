@@ -4,7 +4,6 @@
  * @var \Cake\Datasource\EntityInterface $user
  */
 ?>
-<?= $this->element('managements_nav',['current_user' => $current_user]) ?>
 <div class="users form large-9 medium-8 columns content">
     <?= $this->Form->create($user) ?>
     <fieldset>

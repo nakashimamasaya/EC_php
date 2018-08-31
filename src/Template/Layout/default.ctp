@@ -47,6 +47,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <?php if(isset($current_user)): ?>
                     <li><?=$this->Html->link('商品一覧',['controller' => 'Products', 'action' => 'index'])?></li>
                     <li><?=$this->Html->link('カート',['controller' => 'Carts', 'action' => 'index'])?></li>
+                    <li><?=$this->Html->link('購入履歴',['controller' => 'Purchases', 'action' => 'index'])?></li>
                     <li><?=$this->Html->link('ログアウト',['controller' => 'Users', 'action' => 'logout'])?></li>
                 <?php else: ?>
                     <li><?=$this->Html->link('ログイン',['controller' => 'Users', 'action' => 'login'])?></li>
@@ -57,6 +58,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </nav>
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
+        <?php if($current_user['level'] > 0): ?>
+        <?= $this->element('managements_nav',['current_user' => $current_user]) ?>
+        <?php endif ?>
         <?= $this->fetch('content') ?>
     </div>
     <footer>

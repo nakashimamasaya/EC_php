@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Product $product
  */
 ?>
-<?= $this->element('managements_nav',['current_user' => $current_user]) ?>
 
 <div class="products view large-9 medium-8 columns content">
     <h3><?= h($product->title) ?></h3>
