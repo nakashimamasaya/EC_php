@@ -39,7 +39,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <nav class="top-bar expanded" data-topbar role="navigation">
         <ul class="title-area large-2 medium-4 columns">
             <li class="name">
-                <h1><a href="">仮ヘッダー</a></h1>
+                <h1><a href="/">ECサイト</a></h1>
             </li>
         </ul>
         <div class="top-bar-section">
@@ -48,6 +48,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <li><?=$this->Html->link('商品一覧',['controller' => 'Products', 'action' => 'index'])?></li>
                     <li><?=$this->Html->link('カート',['controller' => 'Carts', 'action' => 'index'])?></li>
                     <li><?=$this->Html->link('購入履歴',['controller' => 'Purchases', 'action' => 'index'])?></li>
+                    <li> <?= $this->Form->postLink(__('退会'), ['controller' => 'Users', 'action' => 'delete', $current_user['id']], ['confirm' => __('退会しますか？')]) ?></li>
                     <li><?=$this->Html->link('ログアウト',['controller' => 'Users', 'action' => 'logout'])?></li>
                 <?php else: ?>
                     <li><?=$this->Html->link('ログイン',['controller' => 'Users', 'action' => 'login'])?></li>
