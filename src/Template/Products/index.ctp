@@ -28,7 +28,7 @@
                     <ul>
                         <li><button class="show_button product_<?= $product->id ?> button">もっとみる</button></li>
                         <?php if(strtotime($today) >= strtotime($product->saleDate)): ?>
-                        <li><button class="cart_button button" id="<?= $product->id ?>">カートに入れる</button></li>
+                        <li><?= $this->Form->postLink(__('カートに入れる'), ['controller' => 'carts', 'action' => 'add', $product->id], ["class" => "button"]) ?></li>
                         <?php endif ?>
                     </ul>
                 </td>
