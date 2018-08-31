@@ -4,7 +4,6 @@
  * @var \Cake\Datasource\EntityInterface $user
  */
 ?>
-<?= $this->element('managements_nav',['current_user' => $current_user]) ?>
 <div class="users view large-9 medium-8 columns content">
     <h3><?= h($user->id) ?></h3>
     <table class="vertical-table">

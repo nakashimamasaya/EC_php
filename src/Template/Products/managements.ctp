@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\Product[]|\Cake\Collection\CollectionInterface $products
  */
 ?>
-<?= $this->element('managements_nav',['current_user' => $current_user]) ?>
 <div class="products index large-9 medium-8 columns content">
     <h3><?= __('Products') ?></h3>
     <table cellpadding="0" cellspacing="0">
