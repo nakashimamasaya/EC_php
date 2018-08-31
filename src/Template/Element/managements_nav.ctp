@@ -5,6 +5,7 @@
         <li><?= $this->Html->link(__('商品作成'), ['controller' => 'Products', 'action' => 'add']) ?></li>
         <?php if($current_user['level'] == 2): ?>
             <li><?= $this->Html->link(__('ユーザーリスト'), ['controller' => 'Users', 'action' => 'index']) ?></li>
+            <li><?= $this->Html->link(__('購入結果管理'), ['controller' => 'Purchases', 'action' => 'managements']) ?></li>
         <?php endif ?>
     </ul>
 </nav>
