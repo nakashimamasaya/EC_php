@@ -32,7 +32,7 @@
         <?= $this->Text->autoParagraph(h($product->details)); ?>
     </div>
     <div class="row">
-        <?= $this->Html->link(__('戻る'), ['action' => 'index']) ?>
-        <!-- <?= $this->Form->postLink(__('削除'), ['action' => ''])?> -->
+        <?= $this->Html->link(__('戻る'), ['action' => 'index'], ["class" => "button"]) ?>
+        <?= $this->Form->postLink(__('カートに入れる'), ['controller' => 'carts', 'action' => 'add', $product->id], ["class" => "button"]) ?>
     </div>
 </div>
