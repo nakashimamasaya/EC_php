@@ -8,7 +8,6 @@
     <?= $this->Form->button('検索') ?>
     <?= $this->Form->end() ?>
 </div>
-
 <?php if(!empty($results)): ?>
 <table cellpadding="0" cellspacing="0">
     <thead>
@@ -42,6 +41,7 @@
     <?= $this->element('product_details',['product' => $product]) ?>
 <?php endforeach ?>
 <?php endif ?>
-<?php if(!empty($find) && !empty($results)): ?>
+
+<?php if($results != '' && ! $results->first() && $flag): ?>
     <h1>該当する商品はありません。</h1>
 <?php endif ?>

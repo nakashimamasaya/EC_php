@@ -173,10 +173,13 @@ class ProductsController extends AppController
         ];
             $results = $this->paginate($this->Products->find('all')->where(["OR" => [["title like " => "%" . $find . "%"],["details like " => "%" . $find . "%"]]]));
             $find = urldecode($find);
-            $this->set(compact('find', 'results'));
+            $flag = true;
+            $this->set(compact('find', 'results', 'flag'));
             $this->set('today', date("Y/m/d"));
         }else{
-            $this->set(compact('find'));
+            $results = '';
+            $flag = false;
+            $this->set(compact('find', 'results', 'flag'));
         }
 
     }
