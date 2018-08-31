@@ -39,8 +39,8 @@ class PurchasesTable extends Table
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
         ]);
-        // $this->hasMany('Carts')
-             // ->setForeignKey('purchase_id');
+        $this->hasMany('Carts')
+             ->setForeignKey('purchase_id');
     }
 
     /**
