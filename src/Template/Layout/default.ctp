@@ -45,7 +45,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <div class="top-bar-section">
             <ul class="right">
                 <?php if(isset($current_user)): ?>
-                   <li><?=$this->Html->link('ログアウト',['controller' => 'Users', 'action' => 'logout'])?></li>
+                    <li><?=$this->Html->link('商品一覧',['controller' => 'Products', 'action' => 'index'])?></li>
+                    <li><?=$this->Html->link('カート',['controller' => 'Carts', 'action' => 'index'])?></li>
+                    <li><?=$this->Html->link('ログアウト',['controller' => 'Users', 'action' => 'logout'])?></li>
                 <?php else: ?>
                     <li><?=$this->Html->link('ログイン',['controller' => 'Users', 'action' => 'login'])?></li>
                     <li><?=$this->Html->link('新規登録',['controller' => 'Users', 'action' => 'signup'])?></li>
