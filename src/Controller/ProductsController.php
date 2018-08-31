@@ -158,4 +158,30 @@ class ProductsController extends AppController
         return $this->redirect(['action' => 'managements']);
     }
 
+    public function find($find = null){
+        if($this->request->is('post')){
+            $find = $this->request->getData('find');
+            $find = urlencode($find);
+            $this->redirect(['action' => 'find', $find]);
+        }else if(isset($find)){
+            $this->paginate = [
+            'limit' => 10,
+            'contain' => ['Users'],
+            'order' => [
+                'saleDate' => 'desc'
+            ]
+        ];
+            $results = $this->paginate($this->Products->find('all')->where(["OR" => [["title like " => "%" . $find . "%"],["details like " => "%" . $find . "%"]]]));
+            $find = urldecode($find);
+            $flag = true;
+            $this->set(compact('find', 'results', 'flag'));
+            $this->set('today', date("Y/m/d"));
+        }else{
+            $results = '';
+            $flag = false;
+            $this->set(compact('find', 'results', 'flag'));
+        }
+
+    }
+
 }
