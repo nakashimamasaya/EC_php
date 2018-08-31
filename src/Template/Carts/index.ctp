@@ -6,6 +6,7 @@
 ?>
 <div class="carts index large-9 medium-8 columns content">
     <h3><?= __('カートの中身') ?></h3>
+    <?php if(!empty($carts->first())): ?>
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
@@ -30,7 +31,6 @@
                         <li><?= $this->Form->button(__('個数の適用')) ?><?= $this->Form->end() ?></li>
                         <li><?= $this->Form->postLink(__('カートから削除'), ['action' => 'delete', $cart->id], ['confirm' => __('カートから削除しますか？'), 'class' => 'button']) ?></li>
                     </ul>
-                    
                 </td>
             </tr>
             <?php $sum += $cart->product->price * $cart->count ?>
@@ -47,5 +47,9 @@
         </ul>
     </div>
     <h1>合計<?= $sum ?>円</h1>
-    <button>会計に進む</button>
+    <?= $this->Form->postLink(__('会計に進む'), ['controller' => 'Purchases', 'action' => 'edit', $cart->purchase->id, 1], ['confirm' => __('購入しますか？'), 'class' => 'button']) ?>
+    <?php else: ?>
+    <h1>カートに何も入っていません</h1>
+    <?php endif ?>
+    <?= $this->Html->link(__('商品一覧に戻る'), ['controller' => 'Products', 'action' => 'index'], ['class' => 'button']) ?>
 </div>
