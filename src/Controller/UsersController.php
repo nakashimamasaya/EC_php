@@ -47,11 +47,19 @@ class UsersController extends AppController
     }
 
     public function login(){
+        $this->loadModel('Purchases');
         if ($this->request->is('post')){
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
                 $this->Flash->success(__('ログインしました'));
+                $purchase = $this->Purchases->find('all')->where(['user_id' => $this->Auth->user()['id']])->last();
+                if(!isset($purchase)){
+                    $purchase = $this->Purchases->newEntity();
+                    $purchase->level = 0;
+                    $purchase->user_id = $this->Auth->user()['id'];
+                    $this->Purchases->save($purchase);
+                }
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('ユーザ名もしくはパスワードが間違っています'));
