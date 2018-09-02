@@ -1,3 +1,7 @@
+<?php
+ echo $this->Html->script('submit_button.js');
+?>
+
 <div class="products form large-9 medium-8 columns content">
     <?= $this->Form->create($product, ['enctype' => 'multipart/form-data']) ?>
     <fieldset>
