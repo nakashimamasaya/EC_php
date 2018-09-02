@@ -97,3 +97,15 @@ level:0(Before purchase) level:1(After purchase)
 |product_id|INT|NOT|PRIMARY|-|-|
 |Purchase_id|INT|NOT|PRIMARY|-|-|
 |count|INT|NOT|-|-|-|
+
+### Categories table
+| Field         | Type         | Null | Key | Default | Extra          |
+|:-----------:|:------------:|:------------:|:------------:|:------------:|:------------:|
+|id|INT|NO|PRY|-|AUTO_INCREMENT|
+|name|VARCHAR(255)|NO|-|-|UNIQUE|
+
+### Categories_product table
+| Field         | Type         | Null | Key | Default | Extra          |
+|:-----------:|:------------:|:------------:|:------------:|:------------:|:------------:|
+|product_id|INT|NOT|PRIMARY|-|-|
+|category_id|INT|NOT|PRIMARY|-|-|
