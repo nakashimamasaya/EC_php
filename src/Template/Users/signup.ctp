@@ -1,4 +1,7 @@
-<?= $this->Html->script('https://ajaxzip3.github.io/ajaxzip3.js'); ?>
+<?php
+ echo $this->Html->script('submit_button.js');
+ echo $this->Html->script('https://ajaxzip3.github.io/ajaxzip3.js');
+?>
 <div class="users form large-9 medium-8 columns content">
     <?= $this->Form->create($user) ?>
     <fieldset>
