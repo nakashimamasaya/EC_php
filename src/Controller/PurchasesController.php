@@ -71,11 +71,10 @@ class PurchasesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             if($type == 1){
                 foreach ($purchase->carts as $cart) {
-                        if($cart->product->stock - $cart->count < 0){
-                            $this->Flash->error($cart->product->title . 'の在庫がありません。');
-                            $this->redirect(['controller' => 'carts', 'action' => 'index']);
-                        }
-                        $this->Products->save($cart->product);
+                    if($cart->product->stock - $cart->count < 0){
+                        $this->Flash->error($cart->product->title . 'の在庫がありません。');
+                        return $this->redirect(['controller' => 'carts', 'action' => 'index']);
+                    }
                 }
                 $purchase->level = 1;
                 $purchase->purchaseDate = date('Y-m-d H:i:s');
