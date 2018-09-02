@@ -8,7 +8,7 @@
             ]);
             echo $this->Form->control('image', [
                 'type' => 'file',
-                'label' => '画像'
+                'label' => '画像[png, jpeg, gif] 2MB未満'
             ]);
             echo $this->Form->control('details', [
                 'label' => '詳細',
