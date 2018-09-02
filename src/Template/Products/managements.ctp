@@ -21,7 +21,6 @@
         </thead>
         <tbody>
             <?php foreach ($products as $product): ?>
-            <?php print_r($product->user) ?>
             <tr>
                 <td><?= $this->Number->format($product->id) ?></td>
                 <td><?= h($product->title) ?></td>
