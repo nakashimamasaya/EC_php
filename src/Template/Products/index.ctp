@@ -27,8 +27,10 @@
                 <td>
                     <ul>
                         <li><button class="show_button product_<?= $product->id ?> button">もっとみる</button></li>
-                        <?php if(strtotime($today) >= strtotime($product->saleDate)): ?>
-                        <li><?= $this->Form->postLink(__('カートに入れる'), ['controller' => 'carts', 'action' => 'add', $product->id], ["class" => "button"]) ?></li>
+                        <?php if(strtotime($today) >= strtotime($product->saleDate) && $product->stock > 0): ?>
+                            <li><?= $this->Form->postLink(__('カートに入れる'), ['controller' => 'carts', 'action' => 'add', $product->id], ["class" => "button"]) ?></li>
+                        <?php elseif($product->stock == 0): ?>
+                            <h3 class="sold_out">Sold out</h3>
                         <?php endif ?>
                     </ul>
                 </td>
