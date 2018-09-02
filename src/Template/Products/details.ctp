@@ -33,6 +33,8 @@
     </div>
     <div class="row">
         <?= $this->Html->link(__('戻る'), ['action' => 'index'], ["class" => "button"]) ?>
-        <?= $this->Form->postLink(__('カートに入れる'), ['controller' => 'carts', 'action' => 'add', $product->id], ["class" => "button"]) ?>
+        <?php if($product->stock > 0): ?>
+            <?= $this->Form->postLink(__('カートに入れる'), ['controller' => 'carts', 'action' => 'add', $product->id], ["class" => "button"]) ?>
+        <?php endif ?>
     </div>
 </div>
