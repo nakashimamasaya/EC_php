@@ -14,6 +14,12 @@
             <?= $this->Html->image($product->img,['width' => '200', 'height' => '200']) ?>
             <br>
             <?=  h($product->title) ?>
+            <br>
+            <?php if(strtotime($today) >= strtotime($product->saleDate) && $product->stock > 0): ?>
+                <?= $this->Form->postLink(__('カートに入れる'), ['controller' => 'carts', 'action' => 'add', $product->id], ["class" => "button"]) ?>
+            <?php elseif($product->stock == 0): ?>
+                <h3 class="sold_out">Sold out</h3>
+            <?php endif ?>
         </li>
         <?php endforeach; ?>
     </ul>
