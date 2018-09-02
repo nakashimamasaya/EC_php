@@ -25,7 +25,7 @@
                 <td><h2><?= $cart->has('product') ? $this->Html->link($cart->product->title, ['controller' => 'Products', 'action' => 'details', $cart->product->id]) : '' ?></h2></td>
                 <td><h2><?= $this->Number->format($cart->product->price) ?>円</h2></td>
                 <?= $this->Form->create($cart, ['action' => 'edit',$cart->id]) ?>
-                <td><?= $this->Form->control('count', ['label' => '', 'required' => false, 'min' => 1]) ?></td>
+                <td><?= $this->Form->control('count', ['label' => '', 'required' => false, 'min' => 0, 'max' => $cart->product->stock]) ?></td>
                 <td class="actions">
                     <ul style="list-style: none;">
                         <li><?= $this->Form->button(__('個数の適用')) ?><?= $this->Form->end() ?></li>
