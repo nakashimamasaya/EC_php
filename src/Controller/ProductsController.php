@@ -7,7 +7,7 @@ use App\Model\Utility\S3Manager;
 
 class ProductsController extends AppController
 {
-    public $components = array('UserLevel');
+    public $components = ['UserLevel', 'ImageCheck'];
 
 
     public function beforeFilter(Event $event){
@@ -46,10 +46,13 @@ class ProductsController extends AppController
     public function managements(){
         $current_user = $this->Auth->user();
         if($this->UserLevel->checkUser($current_user)){
-            $products = $this->paginate($this->Products->find()->where(['user_id' => $this->Auth->user()['id']]));
             if($current_user['level'] == 2){
-                $products = $this->paginate($this->Products);
+                $query = $this->Products;
             }
+            else{
+                $query = $this->Products->find()->where(['user_id' => $current_user['id']]);
+            }
+            $products = $this->paginate($query);
             $this->set(compact('products'));
         }
         else{
@@ -81,15 +84,19 @@ class ProductsController extends AppController
             if ($this->request->is('post')) {
                 $product = $this->Products->patchEntity($product, $this->request->getData());
                 $fileName = $this->request->getData('image');
-                // if(isset($fileName)){
-                if(false){
+                $type = $this->ImageCheck->checkImage($fileName, $fileName['error']);
+
+                if($type == 0){
                     $s3 = new S3Manager();
                     $file = $fileName['name'];
                     $result = $s3->putObject($fileName['tmp_name'], $file, $file);
                     $product->img = $result;
+                }else if($type == 1){
+                    $this->Flash->error('画像は２MB未満の「png, jpeg, gif」のみです。');
                 }else{
                     $product->img = env('DEFAULT_IMAGE_PATH');
                 }
+
                 if ($this->Products->save($product)) {
                     $this->Flash->success(__('商品が作成されました。'));
 
@@ -111,18 +118,21 @@ class ProductsController extends AppController
         $current_user = $this->Auth->user();
         $product = $this->Products->get($id);
         if($this->UserLevel->checkEditUser($current_user, $product)){
-            if ($this->request->is(['patch', 'post', 'put'])) {
+            if ($this->request->is(['patch', 'post', 'put'])){
+
                 $product = $this->Products->patchEntity($product, $this->request->getData());
                 $fileName = $this->request->getData('image');
-                // if(isset($fileName)){
-                if(false){
+                $type = $this->ImageCheck->checkImage($fileName, $fileName['error']);
+                if($type == 0){
                     $s3 = new S3Manager();
                     $file = $fileName['name'];
                     $result = $s3->putObject($fileName['tmp_name'], $file, $file);
                     $product->img = $result;
-                }else{
-                    $product->img = env('DEFAULT_IMAGE_PATH');
+                }else if($type == 1){
+                    $this->Flash->error('画像は２MB未満の「png, jpeg, gif」のみです。');
+                    return $this->redirect(['action' => 'edit', $id]);
                 }
+
                 if ($this->Products->save($product)) {
                     $this->Flash->success(__('保存されました。'));
 
@@ -169,9 +179,9 @@ class ProductsController extends AppController
             'contain' => ['Users'],
             'order' => [
                 'saleDate' => 'desc'
-            ]
-        ];
-            $results = $this->paginate($this->Products->find('all')->where(["OR" => [["title like " => "%" . $find . "%"],["details like " => "%" . $find . "%"]]]));
+            ]];
+            $results = $this->Products->find('all')->where(["OR" => [["title like " => "%" . $find . "%"],["details like " => "%" . $find . "%"]]]);
+            $results = $this->paginate($results);
             $find = urldecode($find);
             $flag = true;
             $this->set(compact('find', 'results', 'flag'));
