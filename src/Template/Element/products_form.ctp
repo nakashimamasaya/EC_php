@@ -5,7 +5,7 @@
 <div class="products form large-9 medium-8 columns content">
     <?= $this->Form->create($product, ['enctype' => 'multipart/form-data']) ?>
     <fieldset>
-        <legend><?= __('Add Product') ?></legend>
+        <legend><?= __('Product') ?></legend>
         <?php
             echo $this->Form->control('title',[
                 'label' => 'タイトル'
@@ -32,6 +32,13 @@
             ]);
             echo $this->Form->hidden('user_id', [
                 'value' => $users['id']
+            ]);
+            echo $this->Form->control('categories',[
+                'label' => 'カテゴリー',
+                'type' => 'select',
+                'options' => $array,
+                'multiple' => true,
+                'value' => $value
             ]);
         ?>
     </fieldset>
