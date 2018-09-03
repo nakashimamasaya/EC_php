@@ -26,6 +26,18 @@
             <th scope="row"><?= __('発売日') ?></th>
             <td><?= h($product->saleDate) ?></td>
         </tr>
+        <tr>
+            <th scope="row"><?= __('カテゴリー') ?></th>
+            <td>
+            <?php if(isset($product->categories_product)): ?>
+                <ul style="list-style: none;">
+                    <?php foreach($product->categories_product as $category_id): ?>
+                    <li><?= h($category_id->category->name)?></li>
+                    <?php endforeach ?>
+                </ul>
+            <?php endif ?>
+            </td>
+        </tr>
     </table>
     <div class="row">
         <h4><?= __('詳細') ?></h4>
