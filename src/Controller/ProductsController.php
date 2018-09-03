@@ -63,7 +63,7 @@ class ProductsController extends AppController
     public function view($id = null)
     {
         $product = $this->Products->get($id, [
-            'contain' => []
+            'contain' => ['CategoriesProduct' => ['Categories']]
         ]);
 
         $this->set('product', $product);
@@ -71,7 +71,8 @@ class ProductsController extends AppController
 
     public function details($id = null){
         $product = $this->Products->get($id, [
-            'contain' => ['Users']
+            'contain' => ['CategoriesProduct' => ['Categories'],
+                        'Users']
         ]);
 
         $this->set('product', $product);
@@ -80,7 +81,14 @@ class ProductsController extends AppController
     public function add()
     {
         if($this->UserLevel->checkUser($this->Auth->user())){
+            $this->loadModel('Categories');
+            $this->loadModel('CategoriesProduct');
             $product = $this->Products->newEntity();
+            $lists = $this->Categories->find('all');
+            $array = [];
+            foreach ($lists as $list) {
+                $array += [$list['id'] => $list['name']];
+            }
             if ($this->request->is('post')) {
                 $product = $this->Products->patchEntity($product, $this->request->getData());
                 $fileName = $this->request->getData('image');
@@ -100,12 +108,22 @@ class ProductsController extends AppController
                 if ($this->Products->save($product)) {
                     $this->Flash->success(__('商品が作成されました。'));
 
+                    foreach ($this->request->getData('categories') as $list) {
+                        $categories_product = $this->CategoriesProduct->newEntity();
+                        $categories_product->set([
+                            'product_id' => $product->id,
+                            'category_id' => $list
+                        ]);
+                        $this->CategoriesProduct->save($categories_product);
+                    }
+
                     return $this->redirect(['action' => 'managements']);
                 }
                 $this->Flash->error(__('作成できませんでした。'));
             }
-            $this->set(compact('product'));
+            $this->set(compact('product', 'array'));
             $this->set('users', $this->Auth->user());
+            $this->set('value', '');
         }
         else{
             $this->Flash->error('アクセス権限がありません。');
@@ -115,9 +133,23 @@ class ProductsController extends AppController
 
     public function edit($id = null)
     {
+        $this->loadModel('Categories');
+        $this->loadModel('CategoriesProduct');
         $current_user = $this->Auth->user();
-        $product = $this->Products->get($id);
+        $lists = $this->Categories->find('all');
+        $product = $this->Products->get($id, [
+            'contain' => ['CategoriesProduct']
+        ]);
+        $value = [];
+        foreach($product->categories_product as $category){
+            array_push($value, $category->category_id);
+        }
+
         if($this->UserLevel->checkEditUser($current_user, $product)){
+            $array = [];
+            foreach ($lists as $list) {
+                $array += [$list['id'] => $list['name']];
+            }
             if ($this->request->is(['patch', 'post', 'put'])){
 
                 $product = $this->Products->patchEntity($product, $this->request->getData());
@@ -135,12 +167,24 @@ class ProductsController extends AppController
 
                 if ($this->Products->save($product)) {
                     $this->Flash->success(__('保存されました。'));
+                    foreach($product->categories_product as $intermediate){
+                        $this->CategoriesProduct->delete($intermediate);
+                    }
+                    foreach ($this->request->getData('categories') as $list) {
+                        $categories_product = $this->CategoriesProduct->newEntity();
+
+                        $categories_product->set([
+                            'product_id' => $product->id,
+                            'category_id' => $list
+                        ]);
+                        $this->CategoriesProduct->save($categories_product);
+                    }
 
                     return $this->redirect(['action' => 'managements']);
                 }
                 $this->Flash->error(__('保存されませんでした。'));
             }
-            $this->set(compact('product'));
+            $this->set(compact('product', 'array', 'value'));
             $this->set('users', $this->Auth->user());
         }
         else{
