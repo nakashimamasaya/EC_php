@@ -4,4 +4,4 @@
  * @var \App\Model\Entity\Product $product
  */
 ?>
-<?= $this->element('products_form', ['product' => $product]) ?>
+<?= $this->element('products_form', ['product' => $product, 'value' => $value]) ?>
