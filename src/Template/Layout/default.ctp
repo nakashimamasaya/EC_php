@@ -49,6 +49,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <li><?=$this->Html->link('商品検索',['controller' => 'Products', 'action' => 'find'])?></li>
                     <li><?=$this->Html->link('カート',['controller' => 'Carts', 'action' => 'index'])?></li>
                     <li><?=$this->Html->link('購入履歴',['controller' => 'Purchases', 'action' => 'index'])?></li>
+                    <li> <?= $this->Form->postLink(__('ユーザー編集'), ['controller' => 'Users', 'action' => 'view', $current_user['id']]) ?></li>
                     <li> <?= $this->Form->postLink(__('退会'), ['controller' => 'Users', 'action' => 'delete', $current_user['id']], ['confirm' => __('退会しますか？')]) ?></li>
                     <li><?=$this->Html->link('ログアウト',['controller' => 'Users', 'action' => 'logout'])?></li>
                 <?php else: ?>
@@ -60,17 +61,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </nav>
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
-        <?php if($current_user['level'] > 0): ?>
-        <?= $this->element('managements_nav',['current_user' => $current_user]) ?>
-        <?php endif ?>
         <?= $this->fetch('content') ?>
     </div>
     <footer>
-        <ul class="left" style="list-style: none;">
-            <?php if(!isset($current_user)): ?>
-                <li><?=$this->Html->link('管理ページログイン',['controller' => 'Managements', 'action' => 'login'])?></li>
-            <?php endif ?>
-        </ul>
     </footer>
 </body>
 </html>

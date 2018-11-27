@@ -27,18 +27,16 @@ class UsersController extends AppController
         }
     }
 
-    public function index()
-    {
-        $users = $this->paginate($this->Users);
-        $this->set(compact('users'));
-    }
-
     public function view($id = null)
     {
         try{
             $user = $this->Users->get($id, [
                 'contain' => []
             ]);
+            $current_user = $this->Auth->user();
+            if($id != $current_user['id']){
+                $this->redirect(['controller'=>'Products','action'=>'index']);
+            }
             $this->set('user', $user);
         }catch(RecordNotFoundException $e){
             $this->Flash->error('ユーザが存在しません。');
@@ -93,7 +91,7 @@ class UsersController extends AppController
             $user = $this->Users->get($id, [
                 'contain' => []
             ]);
-            if($id != $current_user['id'] && $current_user['level'] != 2 || !isset($user)){
+            if($id != $current_user['id'] || !isset($user)){
                 $this->redirect(['controller'=>'Products','action'=>'index']);
             }
             if ($this->request->is(['patch', 'post', 'put'])) {
@@ -101,7 +99,7 @@ class UsersController extends AppController
                 if ($this->Users->save($user)) {
                     $this->Flash->success(__('変更が適用されました。'));
 
-                    return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['action' => 'view', $current_user['id']]);
                 }
                 $this->Flash->error(__('変更されませんでした。もう一度お試しください。'));
             }
@@ -116,7 +114,7 @@ class UsersController extends AppController
     {
         try{
             $current_user = $this->Auth->user();
-            if($id != $current_user['id'] && $current_user['level'] != 2){
+            if($id != $current_user['id']){
                 $this->redirect(['controller'=>'Products','action'=>'index']);
             }
             $this->request->allowMethod(['post', 'delete']);
