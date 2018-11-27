@@ -36,13 +36,9 @@
                 'type' => 'password',
                 'label' => 'パスワード（確認）'
             ]);
-            if($current_user['level'] == 2){
-                echo '<p>ユーザーレベル</p>';
-                echo $this->Form->select('level',
-                    [0 => '一般ユーザ', 1 => '出品者ユーザ', 2 => 'adminユーザ'],
-                    []
-                );
-            }
+            echo $this->Form->control('level',[
+                'type' => 'hidden'
+            ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('送信')) ?>

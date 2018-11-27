@@ -5,7 +5,7 @@
  */
 ?>
 <div class="users view large-9 medium-8 columns content">
-    <h3><?= h($user->id) ?></h3>
+    <h3><?= h(ユーザー情報) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Firstname') ?></th>
@@ -37,10 +37,10 @@
         </tr>
         
     </table>
-    <?php if($user->id == $current_user['id'] || $current_user['level'] == 2): ?>
+    <?php if($user->id == $current_user['id']): ?>
         <div class="row">
             <?= $this->Html->link(__('編集'), ['action' => 'edit', $user->id]) ?>
-            <?= $this->Form->postLink(__('削除'), ['action' => 'delete', $user->id], ['confirm' => __('削除しますか？')]) ?>
+            <?= $this->Form->postLink(__('退会'), ['action' => 'delete', $user->id], ['confirm' => __('退会しますか？')]) ?>
         </div>
     <?php endif ?>
 </div>
