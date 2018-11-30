@@ -8,12 +8,12 @@
     <h3><?= h(ユーザー情報) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Firstname') ?></th>
-            <td><?= h($user->firstname) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Lastname') ?></th>
             <td><?= h($user->lastname) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Firstname') ?></th>
+            <td><?= h($user->firstname) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Email') ?></th>
@@ -30,10 +30,6 @@
         <tr>
             <th scope="row"><?= __('Address') ?></th>
             <td><?= h($user->address) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Level') ?></th>
-            <td><?= $this->Number->format($user->level) ?></td>
         </tr>
         
     </table>
